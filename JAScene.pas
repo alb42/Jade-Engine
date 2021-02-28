@@ -160,7 +160,9 @@ begin
  	Result := 0.0;
 
    //Result += JASceneRenderBackgroundStars(AScene);
+   {$ifdef JA_RENDER_GRID}
    Result += JASceneRenderGrid(AScene);
+   {$endif}
 
    {Draw SceneSpace Mouse Position}
    //JARenderLine(AScene^.Camera^.Spatial.WorldPosition, AScene^.MousePosition);

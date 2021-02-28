@@ -695,19 +695,23 @@ begin
    begin
       {RenderBuffer Target}
       JARenderRasterPort := RenderBuffer^.RasterPort;
+
       {WindowBuffer Target}
-      //JARenderRasterPort := @Window^.RasterPort;
+
+      {JARenderRasterPort := Window^.Window^.RPort;
+      JARenderRasterPort^.TmpRas := RenderBuffer^.RasterPort^.TmpRas;
+      JARenderRasterPort^.AreaInfo := RenderBuffer^.RasterPort^.AreaInfo;//}
 
       {Method 2 - SetRast sets the entire rasterport to a given pen colour}
 
       //SetWriteMask(JARenderRasterPort, %11110000); {Write to LightPlanes}
       //SetRast(JARenderRasterPort,AEngine^.Palette^.PenGrey or 24); {or 24 = write 1s to shadow planes}
 
-
       SetWriteMask(JARenderRasterPort, %11111111); {Write to All Planes}
       SetRast(JARenderRasterPort,0); {Set Light Band 0}
-      SetWriteMask(JARenderRasterPort, %00000111); {Don't Write to LightPlanes}
-      SetRast(JARenderRasterPort,0); {Black}
+
+      //SetWriteMask(JARenderRasterPort, %00000111); {Don't Write to LightPlanes}
+      //SetRast(JARenderRasterPort,0); {Black}
 
       {Method 3 - RectFill fills arbitary rects within the rasterport}
       //SetAPen(JARenderRasterPort, 1);
@@ -719,6 +723,7 @@ begin
 
       {Render Scene}
       Result += JASceneRender(Scene);
+
 
       {OnRender Callback}
       if AEngine^.Properties.OnRender<>nil then
@@ -740,7 +745,7 @@ begin
       JARenderLine(Vec2SInt32(0,RenderBuffer^.Height-1), Vec2SInt32(RenderBuffer^.Width-1,RenderBuffer^.Height-1));
       }
       {Ensure all rendering completes}
-      WaitBlit();
+      //WaitBlit();
    end;
 end;
 

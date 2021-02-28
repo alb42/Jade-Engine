@@ -22,6 +22,7 @@
 {------------------------------------------------------------------------ Debug}
 
 {$define JA_RENDER_HUD}
+{$define JA_RENDER_GRID}
 
 {$DEFINE JA_DEBUG}
 {$IFDEF JA_DEBUG}
