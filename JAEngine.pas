@@ -324,9 +324,11 @@ begin
 
          //writeln('Screen.dri_depth = '+inttostr(Screen^.DrawInfo^.dri_depth));
          RenderBuffer := JABitmapCreate(
-            Window^.BorderRight-Window^.BorderLeft, Window^.BorderBottom-Window^.BorderTop,
-   			Screen^.DrawInfo^.dri_depth,
-   			Window^.ColourMap);
+           Window^.BorderRight-Window^.BorderLeft, Window^.BorderBottom-Window^.BorderTop,
+           Screen^.DrawInfo^.dri_depth,
+           Window^.ColourMap,
+           0,
+           Window^.Window^.RPort^.BitMap);
 
          {Window Blit Double Buffering}
          JARenderBitmap := RenderBuffer;
@@ -403,7 +405,7 @@ begin
       SetRGB4(Window^.ViewPort, CursorColourRegister + 3,15,0,15); {Cursor Pal 3}
 
       {Setup the cursor Bitmap}
-      CursorBitmap := JABitmapCreate(16,16,2, Window^.ColourMap);
+      CursorBitmap := JABitmapCreate(16,16,2, Window^.ColourMap, BMF_INTERLEAVED, nil);
       MyPointer := PUInt16(AllocVec(SizeOf(UInt16)*36, MEMF_CHIP or MEMF_CLEAR));
       CursorMemoryPointer := Pointer(MyPointer); // to free it later
 
@@ -602,8 +604,9 @@ begin
       JARenderViewMatrix := Mat3Identity;
 
       {Render HUD}
+      {$ifdef JA_RENDER_HUD}
       Result += JAEngineRenderHUD(AEngine);
-
+      {$endif}
       {Render Buffer Outline rect}
       {JARenderLine(Vec2SInt32(0,0), Vec2SInt32(0,RenderBuffer^.Height-1));
       JARenderLine(Vec2SInt32(RenderBuffer^.Width-1,0), Vec2SInt32(RenderBuffer^.Width-1,RenderBuffer^.Height-1));
@@ -725,7 +728,9 @@ begin
       JARenderViewMatrix := Mat3Identity;
 
       {Render HUD}
+      {$ifdef JA_RENDER_HUD}
       Result += JAEngineRenderHUD(AEngine);
+      {$endif}
 
       {SetAPen(JARenderRasterPort, AEngine^.Palette^.PenRed);
       {Render Buffer Outline rect}
@@ -750,6 +755,7 @@ begin
       //BltBitMapRastPort(RenderBuffer^.Bitmap,0,0, Window^.RasterPort,0,0,RenderBuffer^.Width,RenderBuffer^.Height, $C0);
       //BltBitMap(RenderBuffer^.Bitmap,0,0,Window^.RasterPort^.Bitmap,0,0,Window^.Properties.Width,Window^.Properties.Height, $C0,0,nil);
       ClipBlit(RenderBuffer^.RasterPort,0,0,Window^.RasterPort,0,0,Window^.Properties.Width,Window^.Properties.Height, $C0);
+
 
 
       {wait for the blitter to finish - do this if result memory is to be accessed immediately}
@@ -874,8 +880,10 @@ begin
          HUDLine5Length := length(HUDLine5);
          //HUDLine4 := 'UPS: ' + floattostr(AverageUPS);
          //HUDLine4Length := length(HUDLine4);
+         {$ifndef JA_RENDER_HUD}
+         writeln(HUDLine5);
+         {$endif}
          TimeLastSecond := TimeNow;
-         writeln('FPS: ' + floattostr(AverageFPS));
       end;
 
       //Enable();
@@ -886,15 +894,9 @@ end;
 
 function JAEngineRenderHUD(AEngine : PJAEngine) : Float32; {returns execution time in MS}
 var
-   HUD1Extent : ttextextent;
-   HUD2Extent : ttextextent;
-   HUD3Extent : ttextextent;
-   HUD4Extent : ttextextent;
-   HUD5Extent : ttextextent;
-   HUD6Extent : ttextextent;
-
    XPos,YPos : SInt32;
    Offset : TVec2SInt16;
+   FH: Word;
 begin
    if JARenderRasterPort=nil then exit(0);
    with AEngine^ do
@@ -908,30 +910,30 @@ begin
 
       //JARenderLine(Vec2(20,20),Vec2(100,100));
 
-      TextExtent(JARenderRasterPort, pchar(HUDLine1), HUDLine1Length, @HUD1Extent);
-      TextExtent(JARenderRasterPort, pchar(HUDLine2), HUDLine2Length, @HUD2Extent);
-      TextExtent(JARenderRasterPort, pchar(HUDLine3), HUDLine3Length, @HUD3Extent);
-      TextExtent(JARenderRasterPort, pchar(HUDLine4), HUDLine4Length, @HUD4Extent);
-      TextExtent(JARenderRasterPort, pchar(HUDLine5), HUDLine5Length, @HUD5Extent);
-      //TextExtent(CurrentRasterPort, pchar(HUDLine6), HUDLine6Length, @HUD6Extent);
-
+      FH := 10;
+      if Assigned(JARenderRasterPort^.Font) then
+        FH := JARenderRasterPort^.Font^.tf_YSize;
+      // just to make sure
+      if FH > 100 then
+        FH := 10;
       XPos := Window^.BorderLeft + Offset.X;
-      YPos := Window^.BorderTop + ((HUD1Extent.te_Height div 2)+1) + Offset.Y;
+      YPos := Window^.BorderTop + ((FH div 2)+1) + Offset.Y;
       gfxMove(JARenderRasterPort, XPos, YPos);
       GfxText(JARenderRasterPort, pchar(HUDLine1), HUDLine1Length);
-
-      YPos += HUD1Extent.te_Height;
+      //
+      YPos += FH;
       gfxMove(JARenderRasterPort, XPos, YPos);
       GfxText(JARenderRasterPort, pchar(HUDLine2), HUDLine2Length);
-
-      YPos += HUD2Extent.te_Height;
+      //
+      YPos += FH;
       gfxMove(JARenderRasterPort, XPos, YPos);
       GfxText(JARenderRasterPort, pchar(HUDLine3), HUDLine3Length);
-      YPos += HUD3Extent.te_Height;
+      //
+      YPos += FH;
       gfxMove(JARenderRasterPort, XPos, YPos);
       GfxText(JARenderRasterPort, pchar(HUDLine4), HUDLine4Length);
 
-      YPos += HUD4Extent.te_Height;
+      YPos += FH;
       gfxMove(JARenderRasterPort, XPos, YPos);
       GfxText(JARenderRasterPort, pchar(HUDLine5), HUDLine5Length);
       {YPos += HUD5Extent.te_Height;

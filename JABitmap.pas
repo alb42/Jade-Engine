@@ -31,13 +31,13 @@ type
    end;
    PJABitmap = ^TJABitmap;
 
-function JABitmapCreate(AWidth, AHeight, ADepth : SInt16; AColourMap : pColorMap) : PJABitmap;
+function JABitmapCreate(AWidth, AHeight, ADepth : SInt16; AColourMap : pColorMap; Flags: LongWord = 0; AFriend: PBitmap = nil) : PJABitmap;
 function JABitmapDestroy(ABitmap : PJABitmap) : boolean;
 function JABitmapBlit(ASourceBitmap, ADestinationBitmap : PJABitmap; ARect : TJRectSInt32) : boolean;
 
 implementation
 
-function JABitmapCreate(AWidth, AHeight, ADepth : SInt16; AColourMap : pColorMap) : PJABitmap;
+function JABitmapCreate(AWidth, AHeight, ADepth : SInt16; AColourMap : pColorMap; Flags: LongWord = 0; AFriend: PBitmap = nil) : PJABitmap;
 var
    TextAttributes : TTextAttr;
    Font : PTextFont;
@@ -53,7 +53,7 @@ begin
 
       {TODO : currently gets chip memory for standard graphics, probably different for picasso/RTG}
       {allocate memory for the bitmap}
-      Bitmap := AllocBitMap(AWidth, AHeight, ADepth, BMF_CLEAR or BMF_INTERLEAVED, nil);
+      Bitmap := AllocBitMap(AWidth, AHeight, ADepth, BMF_CLEAR or Flags, AFriend);
       //Result^.Bitmap := PBitMap(AllocVec(SizeOf(TBitMap), MEMF_CHIP or MEMF_CLEAR));
 	   {error check and exit}
 	   if (Bitmap=nil) then
@@ -67,8 +67,8 @@ begin
       Result^.Layer := CreateUpfrontLayer(Result^.LayerInfo, Result^.Bitmap, 0, 0, Result^.Width-1, Result^.Height-1, LAYERSIMPLE, nil);
       Result^.RasterPort := Result^.Layer^.RP;
       {Setup the font}
-      TextAttributes.ta_Name := 'courier.font'; //11
-      //TextAttributes.ta_Name := 'topaz.font'; //8
+      //TextAttributes.ta_Name := 'courier.font'; //11
+      TextAttributes.ta_Name := 'topaz.font'; //8
       TextAttributes.ta_YSize := 13;
       TextAttributes.ta_Style := 0;
       TextAttributes.ta_Flags := 0;

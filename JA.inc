@@ -21,6 +21,8 @@
 
 {------------------------------------------------------------------------ Debug}
 
+{$define JA_RENDER_HUD}
+
 {$DEFINE JA_DEBUG}
 {$IFDEF JA_DEBUG}
    {.$DEFINE JA_DEBUG_HEAPTRC}
