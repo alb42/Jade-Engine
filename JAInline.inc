@@ -1,0 +1,1 @@
+{$IFDEF JA_INLINE} inline; {$ENDIF}
