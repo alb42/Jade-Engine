@@ -411,13 +411,13 @@ function JAMemGet(ASize: UInt32): Pointer;
 begin
    JAMemAllocated += ASize;
    //Result := AllocVec(ASize, MEMF_CHIP or MEMF_CLEAR);
-   Result := AllocVec(ASize, MEMF_ANY or MEMF_CLEAR);
+   Result := AllocMem(ASize);
 end;
 
 procedure JAMemFree(AMemory : Pointer; ASize : UInt32);
 begin
    JAMemReleased += ASize;
-   FreeVec(AMemory);
+   Freemem(AMemory);
 end;
 
 function JAMemRealloc(AMemory: Pointer; ASize: UInt32): Pointer;

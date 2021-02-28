@@ -37,8 +37,8 @@ type
         B: LongWord;
       end;
 
-      Colours : PJColour3UInt8; {1:1 Hardware/Software Palette Array}
-      ColourCount : SInt16; {how many entries does the palette have}
+      Colours : array of TJColour3UInt8; {1:1 Hardware/Software Palette Array}
+      //ColourCount : SInt16; {how many entries does the palette have}
 
       PenBlack : SInt16;
       PenRed : SInt16;
@@ -115,17 +115,17 @@ begin
    begin
       Viewport := AViewPort;
       ColourMap := AColourMap;
-      ColourCount := AColourCount;
+      //ColourCount := AColourCount;
       SaveColorMap := ASaveColorMap;
       if ASaveColorMap then
       begin
         // save the old colormap if not on Screen
-        GetRGB32(Viewport^.ColorMap, 0, 256, @oldColours[0]);
+        GetRGB32(Viewport^.ColorMap, 0, PColorMap(ViewPort^.ColorMap)^.Count, @oldColours[0]);
       end;
 
       {Get Memory for Arrays}
-      Colours := JAMemGet(SizeOf(TJColour3UInt8) * ColourCount);
-
+      SetLength(Colours, AColourCount);
+      //Colours := JAMemGet(SizeOf(TJColour3UInt8) * ColourCount);
 
       {$IFDEF JA_ENABLE_SHADOW}
       BandCount := ABandCount;
@@ -266,10 +266,13 @@ begin
    begin
       // restore old colormap
       if SaveColorMap then
-        for i := 0 to 255 do
+      begin
+        for i := 0 to PColorMap(ViewPort^.ColorMap)^.Count - 1 do
           SetRGB32(Viewport, i, oldColours[i].R, oldColours[i].G, oldColours[i].B);
+      end;
 
-      JAMemFree(Colours, SizeOf(TJColour3UInt8) * ColourCount);
+      //JAMemFree(Colours, SizeOf(TJColour3UInt8) * ColourCount);
+      SetLength(Colours, 0);
 
       {$IFDEF JA_ENABLE_SHADOW}
       JAMemFree(Lights,SizeOf(TJAPaletteLight) * LightCount);
@@ -285,8 +288,11 @@ procedure JAPaletteSetColour(APalette: PJAPalette; AColourIndex: SInt16; AColour
 begin
    with APalette^ do
    begin
-      Colours[AColourIndex] := AColour;
-      SetRGB4(ViewPort, AColourIndex, AColour.R shr 4, AColour.G shr 4, AColour.B shr 4);
+      if AColourIndex < High(Colours) then
+      begin
+        Colours[AColourIndex] := AColour;
+        SetRGB4(ViewPort, AColourIndex, AColour.R shr 4, AColour.G shr 4, AColour.B shr 4);
+      end;
    end;
 end;
 

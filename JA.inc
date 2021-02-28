@@ -5,6 +5,8 @@
 {$IFNDEF JA_INLINE} {$INLINE OFF} {$ENDIF}
 
 
+{$define JA_SAVESWAP} {Use the window swap routine also if on own screen seems more stable for now}
+
 {-------------------------------------------------------------------- Framework}
 
 {.$DEFINE JA_ENABLE_SHADOW} {Enable/Disable Shadow Code}

@@ -318,7 +318,7 @@ begin
 
       {Setup JARender}
 
-      if (JAEngineModule_Window in Result^.Properties.Modules) and not (JAEngineModule_Screen in Result^.Properties.Modules) then
+      if (JAEngineModule_Window in Result^.Properties.Modules) {$ifndef JA_SAVESWAP} and not (JAEngineModule_Screen in Result^.Properties.Modules){$endif} then
       begin {Desktop Mode - Setup Blit Buffer}
 
          {Setup Active Render Calls}
@@ -484,7 +484,7 @@ begin
       {Destroy Palette}
       JAPaletteDestroy(Palette);
 
-      if (JAEngineModule_Window in AEngine^.Properties.Modules) and not (JAEngineModule_Screen in AEngine^.Properties.Modules) then
+      if (JAEngineModule_Window in AEngine^.Properties.Modules) {$ifndef JA_SAVESWAP} and not (JAEngineModule_Screen in Result^.Properties.Modules){$endif} then
       begin {Desktop Mode - Destroy Blit Buffer}
          JABitmapDestroy(RenderBuffer);
          //JAPenSetDestroy(JARenderPenSet);
@@ -884,6 +884,7 @@ begin
          //HUDLine4 := 'UPS: ' + floattostr(AverageUPS);
          //HUDLine4Length := length(HUDLine4);
          TimeLastSecond := TimeNow;
+         writeln('FPS: ' + floattostr(AverageFPS));
       end;
 
       //Enable();
