@@ -388,7 +388,7 @@ begin
 
       {Setup Palette}
 
-      Palette := JAPaletteCreate(Window^.ViewPort, Screen^.Screen^.ViewPort.ColorMap, 256, 16, 2);
+      Palette := JAPaletteCreate(Window^.ViewPort, Screen^.Screen^.ViewPort.ColorMap, 256, 16, 2, not (JAEngineModule_Screen in Result^.Properties.Modules));
       JAPalette.Palette := Palette;
 
       //Palette := JAPaletteCreate(Window^.ViewPort, Window^.ColourMap, 8,2);

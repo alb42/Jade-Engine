@@ -30,6 +30,13 @@ type
       ViewPort : pViewPort; {Viewport of this Palette}
       ColourMap : pColorMap; {ColourMap of this Palette}
 
+      SaveColorMap: Boolean;
+      oldColours: array[0..255] of record
+        r: LongWord;
+        G: LongWord;
+        B: LongWord;
+      end;
+
       Colours : PJColour3UInt8; {1:1 Hardware/Software Palette Array}
       ColourCount : SInt16; {how many entries does the palette have}
 
@@ -55,7 +62,7 @@ type
 var
    Palette : PJAPalette;
 
-function JAPaletteCreate(AViewPort : pViewPort; AColourMap : pColorMap; AColourCount, ABandCount, ALightCount : SInt16) : PJAPalette;
+function JAPaletteCreate(AViewPort : pViewPort; AColourMap : pColorMap; AColourCount, ABandCount, ALightCount : SInt16; ASaveColorMap: Boolean) : PJAPalette;
 function JAPaletteDestroy(APalette : PJAPalette) : boolean;
 
 procedure JAPaletteSetColour(APalette : PJAPalette; AColourIndex : SInt16; AColour : TJColour3UInt8);
@@ -86,7 +93,7 @@ begin
    }
 end;
 
-function JAPaletteCreate(AViewPort: pViewPort; AColourMap: pColorMap; AColourCount, ABandCount, ALightCount : SInt16): PJAPalette;
+function JAPaletteCreate(AViewPort: pViewPort; AColourMap: pColorMap; AColourCount, ABandCount, ALightCount : SInt16; ASaveColorMap: Boolean): PJAPalette;
 var
    I,K : SInt16;
    ColourRegister : SInt16;
@@ -101,6 +108,7 @@ var
 
    L0,L1,L2 : UInt8;
 begin
+
    Log('JAPaletteCreate','Creating Palette');
    Result := PJAPalette(JAMemGet(SizeOf(TJAPalette)));
    with Result^ do
@@ -108,6 +116,12 @@ begin
       Viewport := AViewPort;
       ColourMap := AColourMap;
       ColourCount := AColourCount;
+      SaveColorMap := ASaveColorMap;
+      if ASaveColorMap then
+      begin
+        // save the old colormap if not on Screen
+        GetRGB32(Viewport^.ColorMap, 0, 256, @oldColours[0]);
+      end;
 
       {Get Memory for Arrays}
       Colours := JAMemGet(SizeOf(TJColour3UInt8) * ColourCount);
@@ -243,11 +257,18 @@ begin
 end;
 
 function JAPaletteDestroy(APalette : PJAPalette) : boolean;
+var
+  i:Integer;
 begin
    if (APalette=nil) then exit(false);
    Log('JAPaletteDestroy','Destroying Palette');
    with APalette^ do
    begin
+      // restore old colormap
+      if SaveColorMap then
+        for i := 0 to 255 do
+          SetRGB32(Viewport, i, oldColours[i].R, oldColours[i].G, oldColours[i].B);
+
       JAMemFree(Colours, SizeOf(TJColour3UInt8) * ColourCount);
 
       {$IFDEF JA_ENABLE_SHADOW}
