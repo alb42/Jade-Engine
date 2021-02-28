@@ -201,6 +201,7 @@ var
    ItemLight : PJAListItem;
 begin
    {Render Lights}
+   Result := 0;
    ItemLight := AScene^.Lights^.Head^.Next;
    while (ItemLight<>AScene^.Lights^.Tail) do
    begin

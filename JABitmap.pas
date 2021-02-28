@@ -93,7 +93,7 @@ begin
       {The size of the region pointed to by buffer  should be five (5) times as
       large as maxvectors. This size is in bytes.}
       AreaInfoVerticesCount := 12800;
-      AreaInfoVertices := AllocVec(AreaInfoVerticesCount*5, {MEMF_CHIP or }MEMF_CLEAR);
+      AreaInfoVertices := JAMemGet(AreaInfoVerticesCount*5);
       InitArea(@AreaInfo, AreaInfoVertices, AreaInfoVerticesCount);
       RasterPort^.AreaInfo := @AreaInfo;
    end;
@@ -107,7 +107,7 @@ begin
       RasterPort^.AreaInfo := nil;
       RasterPort^.Bitmap := nil;
       RasterPort^.TmpRas := nil;
-      FreeVec(AreaInfoVertices);
+      JAMemFree(AreaInfoVertices, AreaInfoVerticesCount*5);
       FreeVec(TmpRasBuffer);
       {Close the font}
       CloseFont(RasterPort^.Font);
@@ -123,6 +123,7 @@ begin
          WaitBlit();
          FreeBitMap(ABitmap^.Bitmap);
       end;
+      Result := True;
    end;
    JAMemFree(ABitmap, SizeOf(TJABitmap));
 end;

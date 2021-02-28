@@ -41,6 +41,8 @@ type
       MoniSwitch : SInt32;
    end;
 
+   TJAVideoStandard = (JAVIDEO_NTSC = 1, JAVIDEO_GENLOC = 2, JAVIDEO_PAL = 4, JAVIDEO_TODA_SAFE = 8, JAVIDEO_REALLY_PAL = 16);
+
    TJASysInfo = record
       CPU : TJASysInfoCPU;
       CPUName : string;
@@ -52,7 +54,7 @@ type
       MemoryFast : UInt32;
       MemorySlow : UInt32;
       MemoryGraphics : UInt32;
-
+      VideoStandard : TJAVideoStandard;
       PicassoAPI : boolean;
       PicassoBoards : array of TJASysInfoPicassoBoard;
       PicassoBoardsCount : SInt32;
@@ -201,11 +203,19 @@ const
 
 begin
    {PAL or NTSC startup mode detection}
-   if (pGfxBase(GfxBase)^.DisplayFlags and PAL) <> 0 then
-      Log('JASysInfo','System is PAL');
-   if (pGfxBase(GfxBase)^.DisplayFlags and NTSC) <> 0 then
-      Log('JASysInfo','System is NTSC');
+   if ((pGfxBase(GfxBase)^.DisplayFlags and PAL) <> 0) then SysInfo.VideoStandard := JAVIDEO_PAL else
+   if ((pGfxBase(GfxBase)^.DisplayFlags and NTSC) <> 0) then SysInfo.VideoStandard := JAVIDEO_NTSC else
+   if ((pGfxBase(GfxBase)^.DisplayFlags and GENLOC) <> 0) then SysInfo.VideoStandard := JAVIDEO_GENLOC else
+   if ((pGfxBase(GfxBase)^.DisplayFlags and TODA_SAFE) <> 0) then SysInfo.VideoStandard := JAVIDEO_TODA_SAFE else
+   if ((pGfxBase(GfxBase)^.DisplayFlags and 16) <> 0) then SysInfo.VideoStandard := JAVIDEO_REALLY_PAL;
 
+   case SysInfo.VideoStandard of
+      JAVIDEO_PAL : Log('JASysInfo','System is PAL');
+      JAVIDEO_NTSC : Log('JASysInfo','System is NTSC');
+      JAVIDEO_GENLOC : Log('JASysInfo','System is GENLOC');
+      JAVIDEO_TODA_SAFE : Log('JASysInfo','System is TODA SAFE');
+      JAVIDEO_REALLY_PAL : Log('JASysInfo','System is REALLY PAL');
+   end;
 
    {intuition.library version}
    Log('JASysInfo', JALibNameIntuition + ' v' + inttostr(pIntuitionBase(IntuitionBase)^.libnode.lib_version) + '.' + inttostr(pIntuitionBase(IntuitionBase)^.libnode.lib_Revision) + ' found');
@@ -312,6 +322,12 @@ begin
    JASysInfoQueryAudio();
    JASysInfoQueryVolumes();
 end;
+
+initialization
+   JASysInfoQuery();
+
+finalization
+   SetLength(SysInfo.PicassoBoards, SysInfo.PicassoBoardsCount);
 
 end.
 

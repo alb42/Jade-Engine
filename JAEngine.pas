@@ -249,9 +249,6 @@ begin
       HUDLine6 := '';
       HUDLine6Length := 0;
 
-      {query reference data from system}
-      JASysInfoQuery();
-
       Timer := JATimerCreate();
 
       {Setup Public Screen}
@@ -607,12 +604,6 @@ begin
       {Render HUD}
       Result += JAEngineRenderHUD(AEngine);
 
-      //SetAPen(JARenderRasterPort, AEngine^.Palette^.PenRed);
-      //GfxMove(JARenderRasterPort, 10, 10);
-      //Draw(JARenderRasterPort, 100, 100);
-
-
-      //JARenderRasterPort := @JARenderBitmap^.PenGreen^.RasterPort;
       {Render Buffer Outline rect}
       {JARenderLine(Vec2SInt32(0,0), Vec2SInt32(0,RenderBuffer^.Height-1));
       JARenderLine(Vec2SInt32(RenderBuffer^.Width-1,0), Vec2SInt32(RenderBuffer^.Width-1,RenderBuffer^.Height-1));
@@ -757,7 +748,7 @@ begin
 
       {NOTE : Source Vec2,Dest Vec2 - then Width,Height}
       //BltBitMapRastPort(RenderBuffer^.Bitmap,0,0, Window^.RasterPort,0,0,RenderBuffer^.Width,RenderBuffer^.Height, $C0);
-      BltBitMap(RenderBuffer^.Bitmap,0,0,Window^.RasterPort^.Bitmap,0,0,Window^.Properties.Width,Window^.Properties.Height, $C0,0,nil);
+      //BltBitMap(RenderBuffer^.Bitmap,0,0,Window^.RasterPort^.Bitmap,0,0,Window^.Properties.Width,Window^.Properties.Height, $C0,0,nil);
       ClipBlit(RenderBuffer^.RasterPort,0,0,Window^.RasterPort,0,0,Window^.Properties.Width,Window^.Properties.Height, $C0);
 
 
@@ -1056,6 +1047,58 @@ begin
          end;
          AStr += '['+IntToStr(AMessage^.MouseX)+'x'+IntToStr(AMessage^.MouseY)+']';
          Log('ProcessIDCMPMessage',AStr);
+      end;
+
+      IDCMP_RAWKEY :
+      begin
+         case AMessage^.Code of
+            NM_WHEEL_UP :
+            begin
+               {Position Relative To Camera Before Scale}
+
+               V1 := Vec2DotMat3Affine(MouseCoord, AEngine^.Scene^.Camera^.Spatial.WorldMatrixInverse);
+
+               JANodeSetLocalScale(AEngine^.Scene^.Camera,
+                  AEngine^.Scene^.Camera^.Spatial.LocalScale * 0.9);
+
+               V2 := Vec2DotMat3Affine(V1, AEngine^.Scene^.Camera^.Spatial.WorldMatrix);
+
+               V2 := MouseCoord-V2;
+
+               {Position Relative To Camera After Scale}
+               //MouseCoord := JAScenePointToCoord(AEngine^.Scene, MousePosition);
+               //V2 := (MouseCoord-AEngine^.Scene^.Camera^.Spatial.LocalPosition);
+
+               //V2 := Vec2DotMat3Affine(V2-V1,AEngine^.Scene^.Camera^.Spatial.WorldMatrix);
+
+               JANodeSetLocalPosition(AEngine^.Scene^.Camera, AEngine^.Scene^.Camera^.Spatial.LocalPosition + V2);
+
+               //MouseCoord := JAScenePointToCoord(AEngine^.Scene, MousePosition);
+            end;
+            NM_WHEEL_DOWN :
+            begin
+               {Position Relative To Camera Before Scale}
+               V1 := Vec2DotMat3Affine(MouseCoord, AEngine^.Scene^.Camera^.Spatial.WorldMatrixInverse);
+
+               JANodeSetLocalScale(AEngine^.Scene^.Camera,
+                  AEngine^.Scene^.Camera^.Spatial.LocalScale * 1.1);
+
+               V2 := Vec2DotMat3Affine(V1, AEngine^.Scene^.Camera^.Spatial.WorldMatrix);
+
+               V2 := MouseCoord-V2;
+
+               {Position Relative To Camera After Scale}
+               //MouseCoord := JAScenePointToCoord(AEngine^.Scene, MousePosition);
+               //V2 := (MouseCoord-AEngine^.Scene^.Camera^.Spatial.LocalPosition);
+
+               //V2 := Vec2DotMat3Affine(V2-V1,AEngine^.Scene^.Camera^.Spatial.WorldMatrix);
+
+               JANodeSetLocalPosition(AEngine^.Scene^.Camera, AEngine^.Scene^.Camera^.Spatial.LocalPosition + V2);
+            end;
+            NM_WHEEL_LEFT : ;
+            NM_WHEEL_RIGHT : ;
+            NM_BUTTON_FOURTH : ;
+         end;
       end;
       IDCMP_VANILLAKEY :
       begin {key pressed}

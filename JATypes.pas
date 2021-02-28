@@ -303,6 +303,13 @@ const
 	JADeviceNameSerial : PChar = 'serial.device';
 	JADeviceNameParallel : PChar = 'parallel.device';
 
+   {MouseWheel Defines}
+   NM_WHEEL_UP = $7A;
+   NM_WHEEL_DOWN = $7B;
+   NM_WHEEL_LEFT = $7C;
+   NM_WHEEL_RIGHT = $7D;
+   NM_BUTTON_FOURTH = $7E;
+
 var
    JAMemAllocated : UInt32 = 0;
    JAMemReleased : UInt32 = 0;

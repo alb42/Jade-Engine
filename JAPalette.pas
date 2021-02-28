@@ -31,7 +31,7 @@ type
       ColourMap : pColorMap; {ColourMap of this Palette}
 
       SaveColorMap: Boolean;
-      oldColours: array[0..255] of record
+      OldColours: array of record
         r: LongWord;
         G: LongWord;
         B: LongWord;
@@ -120,6 +120,7 @@ begin
       if ASaveColorMap then
       begin
         // save the old colormap if not on Screen
+        SetLength(OldColours, PColorMap(ViewPort^.ColorMap)^.Count);
         GetRGB32(Viewport^.ColorMap, 0, PColorMap(ViewPort^.ColorMap)^.Count, @oldColours[0]);
       end;
 
@@ -267,8 +268,9 @@ begin
       // restore old colormap
       if SaveColorMap then
       begin
-        for i := 0 to PColorMap(ViewPort^.ColorMap)^.Count - 1 do
-          SetRGB32(Viewport, i, oldColours[i].R, oldColours[i].G, oldColours[i].B);
+        for i := 0 to High(OldColours) do
+          SetRGB32(Viewport, i, OldColours[i].R, OldColours[i].G, OldColours[i].B);
+        SetLength(OldColours, 0);
       end;
 
       //JAMemFree(Colours, SizeOf(TJColour3UInt8) * ColourCount);

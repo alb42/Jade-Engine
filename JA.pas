@@ -57,7 +57,7 @@ begin
    JAPolygonMakeRect(Polygon,JRect(-400,-400,400,400));
    Polygon^.Style.PenIndex := AEngine^.Palette^.PenYellow;}
 
-   {
+    {
    {Setup Light}
    JANodeLight0 := JANodeNodeCreate(AEngine^.Scene^.RootNode, JANode_Light);
    JANodeSetLocalPosition(JANodeLight0, vec2(160,-300));
@@ -65,14 +65,14 @@ begin
    PJANodeDataLight(JANodeLight0^.Data)^.PaletteLightIndex := 0;
    PJANodeDataLight(JANodeLight0^.Data)^.Radius := 20;
    PJANodeDataLight(JANodeLight0^.Data)^.ConeAngle := 120;
-
-
+   //}
+   {
    JANodeLight1 := JANodeNodeCreate(AEngine^.Scene^.RootNode, JANode_Light);
    JANodeSetLocalPosition(JANodeLight1, vec2(-160,-300));
    {Set Light Colour}
    PJANodeDataLight(JANodeLight1^.Data)^.PaletteLightIndex := 1;
    PJANodeDataLight(JANodeLight1^.Data)^.Radius := 20;
-  }
+  //}
    {Caster0 := JANodeNodeCreate(AEngine^.Scene^.RootNode, JANode_Sketch);
    Polygon := JASketchPolygonCreate(PJANodeDataSketch(Caster0^.Data)^.Sketch);
    JAPolygonMakeCircle(Polygon,vec2(0,0),50,13);
@@ -240,6 +240,9 @@ would not allow for light casters to be off screen}
 begin
    Randomize();
 
+    {Note : JASysInfo.initialization has already run by this stage}
+
+   sysdebugln('JA started');
    EngineProperties := JAEnginePropertiesDefault;
 
    With EngineProperties do
@@ -263,14 +266,16 @@ begin
       WindowProperties.API := JAGraphicsAPI_Auto;
 
       {Remove Border if We're FullScreen}
+      {$ifndef JA_SAVESWAP}
       if (JAEngineModule_Screen in Modules) then
          WindowProperties.Border := false;
+      {$endif}
 
       {Default Resolutions}
-      if ((pGfxBase(GfxBase)^.DisplayFlags and PAL) <> 0) then
-         ResLow := Vec2SInt16(320,256) {PAL} else
-      if ((pGfxBase(GfxBase)^.DisplayFlags and NTSC) <> 0) then
-         ResLow := Vec2SInt16(320,200) {NTSC} else
+      if (SysInfo.VideoStandard = JAVIDEO_PAL) then
+         ResLow := Vec2SInt16(320,256) else
+      if (SysInfo.VideoStandard = JAVIDEO_NTSC) then
+         ResLow := Vec2SInt16(320,200) else
          ResLow := Vec2SInt16(320,200);
       ResMedium := Vec2SInt16(640,480);
       ResHigh := Vec2SInt16(1024,768);
@@ -287,7 +292,7 @@ begin
       end else
       begin
          ScreenProperties.API := JAGraphicsAPI_Intuition;
-         ScreenProperties.Depth := 5; {2^5 = 32 Colours}
+         ScreenProperties.Depth := 8; {2^5 = 32 Colours}
          WindowProperties.API := JAGraphicsAPI_Intuition;
          ResCurrent := ResLow;
       end;

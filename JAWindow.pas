@@ -126,11 +126,13 @@ begin
                IDCMP_MOUSEBUTTONS or
                IDCMP_CLOSEWINDOW or
                IDCMP_NEWSIZE or
+               IDCMP_RAWKEY or
                IDCMP_VANILLAKEY or
                IDCMP_MENUPICK or
-               IDCMP_INTUITICKS, // or IDCMP_REFRESHWINDOW,
-		         //WA_Flags, WFLG_WINDOWREFRESH or WFLG_REFRESHBITS,
-               TAG_END]);
+               IDCMP_INTUITICKS
+               // or IDCMP_REFRESHWINDOW
+		         //WA_Flags, WFLG_WINDOWREFRESH or WFLG_REFRESHBITS
+               ,TAG_END]);
 
             if (Result^.Window = nil) then
             begin
@@ -288,3 +290,4 @@ begin
 end;
 
 end.
+
