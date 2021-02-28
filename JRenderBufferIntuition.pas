@@ -25,11 +25,9 @@ type
       {Layer Clipping Region}
       LayerInfo : pLayer_Info;
       Layer : pLayer;
-      RegionRect : tRectangle;
-      Region : pRegion;
 
       {RasterPort}
-      RasterPort : TRastPort;
+      RasterPort : PRastPort;
       TmpRas : TTmpRas;
       TmpRasBuffer : pointer;
       TmpRasBufferSize : UInt32;
@@ -58,80 +56,14 @@ function DestroyRenderBufferIntuition(ARenderBufferIntuition : PJRenderBufferInt
 
 implementation
 
-function BitmapFreePlanes(ABitmap : PBitmap; AWidth, AHeight, ADepth : UInt16) : boolean;
-var
-	PlaneI : UInt16;
-begin
-	for PlaneI := 0 to ADepth-1 do
-	begin
-   	if (ABitmap^.Planes[PlaneI] <> nil) then
-   	begin
-   		FreeRaster(ABitmap^.Planes[PlaneI], AWidth, AHeight);
-   		ABitmap^.Planes[PlaneI] := nil; {TODO : does FreeRaster() do this for us?}
-   	end;
-	end;
-	Result := true;
-end;
-
-function BitmapSetupPlanes(ABitmap : PBitMap; AWidth, AHeight, ADepth : UInt16) : boolean;
-var
-	PlaneI : UInt16;
-begin
-	for PlaneI := 0 to ADepth-1 do
-	begin
-		ABitmap^.Planes[PlaneI] := AllocRaster(AWidth, AHeight);
-		
-		if (ABitmap^.Planes[PlaneI] <> nil) then
-		begin
-			BltClear(ABitmap^.Planes[PlaneI], (AWidth div 8) * AHeight, 1);
-		end else
-		begin
-		  BitmapFreePlanes(ABitmap, AWidth, AHeight, ADepth);
-		  exit(false);
-		end;
-	end;  	 	
-	Result := true;
-end;
-
 function BufferBitmapsSetup(ARenderBuffer : PJRenderBufferIntuition; AWidth, AHeight, ADepth : UInt16) : boolean;
-var
-	PlaneResult : boolean;
 begin
 	{TODO : currently gets chip memory for standard graphics, probably different for picasso/RTG}
 
 	{allocate memory for the bitmap}
-   ARenderBuffer^.Bitmap := AllocBitMap(AWidth, AHeight, ADepth, 0, {BMF_CLEAR,} nil);
-    {
-	ARenderBuffer^.Bitmap := nil;
-	ARenderBuffer^.Bitmap := PBitMap(AllocVec(SizeOf(TBitMap), MEMF_CHIP or MEMF_CLEAR)); 	
-	
-	{error check and exit}
-	if (ARenderBuffer^.Bitmap=nil) then exit(false);
-		 		
-	{initalize the bitmap}
-	InitBitMap(ARenderBuffer^.Bitmap, ADepth, AWidth, AHeight);
-   
-   {setup the planes}
-   PlaneResult := BitmapSetupPlanes(ARenderBuffer^.Bitmap, ADepth, AWidth, AHeight);
-   
-   {error check and clean exit}
-	if (PlaneResult=false) then
-	begin   			
-		if (ARenderBuffer^.Bitmap<>nil) then FreeVec(ARenderBuffer^.Bitmap);//, SizeOf(TBitMap));		
-		exit(false);
-	end;  }
+  ARenderBuffer^.Bitmap := AllocBitMap(AWidth, AHeight, ADepth, 0, {BMF_CLEAR,} nil);
 
 	Result := true;	
-end;
-
-function BufferBitmapsFree(ARenderBuffer : PJRenderBufferIntuition; AWidth, AHeight, ADepth : UInt16) : boolean;
-begin
-	if (ARenderBuffer^.Bitmap<>nil) then
-	begin
-		BitmapFreePlanes(ARenderBuffer^.Bitmap, ADepth, AWidth, AHeight);
-		FreeVec(ARenderBuffer^.Bitmap);//, SizeOf(TBitMap));
-	end;	
-	Result := true;
 end;
 
 {AScreenBufferType = SB_SCREEN_BITMAP or SB_COPY_BITMAP}
@@ -141,7 +73,7 @@ var
    Font : PTextFont;
 begin
 	{get memory for structure}
-	Result := PJRenderBufferIntuition(AllocVec(SizeOf(TJRenderBufferIntuition), MEMF_ANY or MEMF_CLEAR));
+	Result := PJRenderBufferIntuition(AllocMem(SizeOf(TJRenderBufferIntuition)));
 
    Result^.Width := AWidth;
    Result^.Height := AHeight;
@@ -156,13 +88,13 @@ begin
 	Result^.ScreenBuffer^.sb_DBufInfo^.dbi_UserData1 := APTR(AIndex);
    {setup double-buffer safe message reply-port}
    Result^.ScreenBuffer^.sb_DBufInfo^.dbi_SafeMessage.mn_ReplyPort := ADoubleBufferMessagePort;
+   // create layer take rastport
+   Result^.LayerInfo := NewLayerInfo();
+   Result^.Layer := CreateUpfrontLayer(Result^.LayerInfo, Result^.Bitmap, 0, 0, Result^.Width-1, Result^.Height-1, LAYERSIMPLE, nil);
+   Result^.RasterPort :=  Result^.Layer^.RP;
 
-	{init raster port}
-   InitRastPort(@Result^.RasterPort);
-   {attach the screenbuffer bitmap to the rasterport}
-	Result^.RasterPort.Bitmap := Result^.Bitmap; //Result^.ScreenBuffer^.sb_BitMap;
 	{set rasterport to doublebuffered}
-	Result^.RasterPort.Flags := DBUFFER;
+	Result^.RasterPort^.Flags := DBUFFER;
 
    {Setup the font}
    TextAttributes.ta_Name := 'courier.font'; //11
@@ -171,22 +103,7 @@ begin
    TextAttributes.ta_Style := 0;
    TextAttributes.ta_Flags := 0;
    Font := OpenFont(@TextAttributes);
-   SetFont(@Result^.RasterPort, Font);
-
-
-   {Setup Layer Clipping Region}
-   Result^.LayerInfo := NewLayerInfo();
-   Result^.Layer := CreateUpfrontLayer(Result^.LayerInfo, Result^.Bitmap, 0, 0, Result^.Width-1, Result^.Height-1, 0, nil);
-   Result^.Region := NewRegion();
-   Result^.RegionRect.MinX := 0;
-   Result^.RegionRect.MinY := 0;
-   Result^.RegionRect.MaxX := Result^.Width-1;
-   Result^.RegionRect.MaxY := Result^.Height-1;
-   OrRectRegion(Result^.Region, @Result^.RegionRect);
-   InstallClipRegion(Result^.Layer, Result^.Region);
-
-   {Attach the Clipping Layer to the RasterPort}
-   Result^.RasterPort.Layer := Result^.Layer;
+   SetFont(Result^.RasterPort, Font);
 
    {Setup the TmpRas for Area Fill Functions}
 
@@ -197,18 +114,18 @@ begin
    4K TmpRas can apparently trick/force the last blit operation performed
    to exit early allowing for some concurrent CPU execution at that time}
 
-   //TmpRasBufferSize := 1024*4;
-   Result^.TmpRasBufferSize := 1024*768*4;
-   Result^.TmpRasBuffer := AllocVec(Result^.TmpRasBufferSize, MEMF_CHIP or MEMF_CLEAR);
+   //Result^.TmpRasBufferSize := 1024*4;
+   Result^.TmpRasBufferSize := AWidth * AHeight;
+   Result^.TmpRasBuffer := AllocVec(Result^.TmpRasBufferSize,  MEMF_CHIP or MEMF_CLEAR);
    InitTmpRas(@Result^.TmpRas, Result^.TmpRasBuffer, Result^.TmpRasBufferSize);
-   Result^.RasterPort.TmpRas := @Result^.TmpRas;
+   Result^.RasterPort^.TmpRas := @(Result^.TmpRas);
 
    {The size of the region pointed to by buffer  should be five (5) times as
    large as maxvectors. This size is in bytes.}
-   Result^.AreaInfoVerticesCount := 128;
-   Result^.AreaInfoVertices := AllocVec(Result^.AreaInfoVerticesCount*5, MEMF_CHIP or MEMF_CLEAR);
+   Result^.AreaInfoVerticesCount := 12800;
+   Result^.AreaInfoVertices := AllocVec(Result^.AreaInfoVerticesCount*5, {MEMF_CHIP or }MEMF_CLEAR);
    InitArea(@Result^.AreaInfo, Result^.AreaInfoVertices, Result^.AreaInfoVerticesCount);
-   Result^.RasterPort.AreaInfo := @Result^.AreaInfo;
+   Result^.RasterPort^.AreaInfo := @(Result^.AreaInfo);
 
 
    {set initial status to render}
@@ -219,8 +136,31 @@ function DestroyRenderBufferIntuition(ARenderBufferIntuition : PJRenderBufferInt
 begin
 	Result := true;
 
-	//BufferBitmapsFree(ARenderBufferIntuition, AScreen^.Width, AScreen.Height, AScreen^.dri_depth);
-	FreeVec(ARenderBufferIntuition);
+  if (ARenderBufferIntuition=nil) then exit(false);
+   with ARenderBufferIntuition^ do
+   begin
+      RasterPort^.AreaInfo := nil;
+      RasterPort^.Bitmap := nil;
+      RasterPort^.TmpRas := nil;
+      FreeVec(AreaInfoVertices);
+      FreeVec(TmpRasBuffer);
+      {Close the font}
+      CloseFont(RasterPort^.Font);
+      DeleteLayer(0, Layer);
+      DisposeLayerInfo(LayerInfo);
+
+
+      {free the system bitmap}
+      if (ARenderBufferIntuition^.Bitmap<>nil) then
+      begin
+         {Note that the AutoDoc FreeBitMap() recommends calling WaitBlit() before releasing
+         the Bitmap to be sure that nothing is being written in it.}
+         WaitBlit();
+         FreeBitMap(ARenderBufferIntuition^.Bitmap);
+      end;
+   end;
+
+	FreeMem(ARenderBufferIntuition);
 end;
 
 end.

@@ -119,6 +119,7 @@ begin
 
    {Set Polygon Colour}
    SetAPen(JARenderRasterPort, APolygon^.Style.PenIndex);
+   SetBPen(JARenderRasterPort, APolygon^.Style.PenIndex);
 
    {$IFDEF JA_ENABLE_SHADOW}
    SetWrMsk(JARenderRasterPort, %00000111); {Disable writing to Shadow Channel}

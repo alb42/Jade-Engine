@@ -156,15 +156,15 @@ begin
    JAToyStarSystemUpdate(StarSystem, ADelta);
 
    {Track the Second Planet With the Camera}
-   TransformVec := Vec2DotMat3Affine(Vec2Zero, StarSystem^.Bodies[2]^.Spatial.WorldMatrix);
-   JANodeSetLocalPosition(Engine^.Scene^.Camera, TransformVec);
+   //TransformVec := Vec2DotMat3Affine(Vec2Zero, StarSystem^.Bodies[2]^.Spatial.WorldMatrix);
+   //JANodeSetLocalPosition(Engine^.Scene^.Camera, TransformVec);
 
    {Rotate Camera}
    //JANodeSetLocalRotation(Engine^.Scene^.Camera, Engine^.Scene^.Camera^.Spatial.LocalRotation - 22*ADelta);
    //JANodeSetLocalRotation(Caster0, Caster0^.Spatial.LocalRotation + (30*ADelta));
-   {JANodeSetLocalRotation(Caster1, Caster0^.Spatial.LocalRotation + (40*ADelta));
-   JANodeSetLocalRotation(Caster2, Caster0^.Spatial.LocalRotation + (50*ADelta));
-   JANodeSetLocalRotation(Caster3, Caster0^.Spatial.LocalRotation + (60*ADelta));}
+   //JANodeSetLocalRotation(Caster1, Caster0^.Spatial.LocalRotation + (40*ADelta));
+   //JANodeSetLocalRotation(Caster2, Caster0^.Spatial.LocalRotation + (50*ADelta));
+   //JANodeSetLocalRotation(Caster3, Caster0^.Spatial.LocalRotation + (60*ADelta));
 
 
    //JANodeSetLocalPosition(JANodeLight0, Engine^.Scene^.MousePosition);
@@ -246,7 +246,7 @@ begin
    begin
       {Engine Modules}
       Modules := [
-         JAEngineModule_Screen, {Enable Custom Screen}
+         //JAEngineModule_Screen, {Enable Custom Screen}
          JAEngineModule_Window, {Enable Window}
          JAEngineModule_Scene, {Enable Scenegraph}
          JAEngineModule_Audio {Enable Audio}
@@ -278,7 +278,7 @@ begin
       ResCurrent := ResMedium;
 
       {Debug - Quick Switching Between Profiles}
-      if (1=1) then
+      if (1=0) then
       begin
          ScreenProperties.API := JAGraphicsAPI_Picasso;
          ScreenProperties.Depth := 8; {2^8 = 256 Colours}

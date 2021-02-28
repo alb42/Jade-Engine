@@ -19,11 +19,9 @@ type
      {Layer Clipping Region}
      LayerInfo : pLayer_Info;
      Layer : pLayer;
-     RegionRect : tRectangle;
-     Region : pRegion;
 
      {RasterPort}
-     RasterPort : TRastPort;
+     RasterPort : PRastPort;
      TmpRas : TTmpRas;
      TmpRasBuffer : pointer;
      TmpRasBufferSize : UInt32;
@@ -63,12 +61,11 @@ begin
          JAMemFree(Result,SizeOf(TJABitmap));
          exit(nil);
       end;
-
-	   {Init RasterPort}
-      InitRastPort(@Result^.RasterPort);
-      {Attach Bitmap to RasterPort}
-      Result^.RasterPort.BitMap := Bitmap;
-
+      //
+      {Setup Layer Clipping Region}
+      Result^.LayerInfo := NewLayerInfo();
+      Result^.Layer := CreateUpfrontLayer(Result^.LayerInfo, Result^.Bitmap, 0, 0, Result^.Width-1, Result^.Height-1, LAYERSIMPLE, nil);
+      Result^.RasterPort := Result^.Layer^.RP;
       {Setup the font}
       TextAttributes.ta_Name := 'courier.font'; //11
       //TextAttributes.ta_Name := 'topaz.font'; //8
@@ -76,22 +73,7 @@ begin
       TextAttributes.ta_Style := 0;
       TextAttributes.ta_Flags := 0;
       Font := OpenFont(@TextAttributes);
-      SetFont(@Result^.RasterPort, Font);
-
-
-      {Setup Layer Clipping Region}
-      Result^.LayerInfo := NewLayerInfo();
-      Result^.Layer := CreateUpfrontLayer(Result^.LayerInfo, Result^.Bitmap, 0, 0, Result^.Width-1, Result^.Height-1, 0, nil);
-      Result^.Region := NewRegion();
-      Result^.RegionRect.MinX := 0;
-      Result^.RegionRect.MinY := 0;
-      Result^.RegionRect.MaxX := Result^.Width-1;
-      Result^.RegionRect.MaxY := Result^.Height-1;
-      OrRectRegion(Result^.Region, @Result^.RegionRect);
-      InstallClipRegion(Result^.Layer, Result^.Region);
-
-      {Attach the Clipping Layer to the RasterPort}
-      Result^.RasterPort.Layer := Result^.Layer;
+      SetFont(Result^.RasterPort, Font);
 
       {Setup the TmpRas for Area Fill Functions}
 
@@ -102,38 +84,36 @@ begin
       4K TmpRas can apparently trick/force the last blit operation performed
       to exit early allowing for some concurrent CPU execution at that time}
 
+      TmpRasBufferSize := AWidth * AHeight;
       //TmpRasBufferSize := 1024*4;
-      TmpRasBufferSize := 1024*768*4;
       TmpRasBuffer := AllocVec(TmpRasBufferSize, MEMF_CHIP or MEMF_CLEAR);
       InitTmpRas(@TmpRas, TmpRasBuffer, TmpRasBufferSize);
-      RasterPort.TmpRas := @TmpRas;
+      RasterPort^.TmpRas := @TmpRas;
 
       {The size of the region pointed to by buffer  should be five (5) times as
       large as maxvectors. This size is in bytes.}
-      AreaInfoVerticesCount := 128;
-      AreaInfoVertices := AllocVec(AreaInfoVerticesCount*5, MEMF_CHIP or MEMF_CLEAR);
+      AreaInfoVerticesCount := 12800;
+      AreaInfoVertices := AllocVec(AreaInfoVerticesCount*5, {MEMF_CHIP or }MEMF_CLEAR);
       InitArea(@AreaInfo, AreaInfoVertices, AreaInfoVerticesCount);
-      RasterPort.AreaInfo := @AreaInfo;
+      RasterPort^.AreaInfo := @AreaInfo;
    end;
 end;
 
 function JABitmapDestroy(ABitmap : PJABitmap) : boolean;
 begin
    if (ABitmap=nil) then exit(false);
-
    with ABitmap^ do
    begin
+      RasterPort^.AreaInfo := nil;
+      RasterPort^.Bitmap := nil;
+      RasterPort^.TmpRas := nil;
       FreeVec(AreaInfoVertices);
       FreeVec(TmpRasBuffer);
-
-      {Free Layer Clipping Region}
-      InstallClipRegion(Layer, nil);
-      DisposeRegion(Region);
+      {Close the font}
+      CloseFont(RasterPort^.Font);
       DeleteLayer(0, Layer);
       DisposeLayerInfo(LayerInfo);
 
-      {Close the font}
-      CloseFont(RasterPort.Font);
 
       {free the system bitmap}
       if (ABitmap^.Bitmap<>nil) then

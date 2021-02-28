@@ -122,6 +122,8 @@ type
       Buffers : array[0..1] of PJRenderBufferIntuition;
       BufferNextRender : UInt8;
       BufferNextSwap : UInt8;
+
+      CursorMemoryPointer: Pointer;
    end;
 
 const
@@ -331,7 +333,7 @@ begin
 
          {Window Blit Double Buffering}
          JARenderBitmap := RenderBuffer;
-         JARenderRasterPort := @RenderBuffer^.RasterPort;
+         JARenderRasterPort := RenderBuffer^.RasterPort;
 
          {Setup Main Clipping Rect}
          JARenderClipRect := JRectSInt16(0,0,(Window^.BorderRight-Window^.BorderLeft)-0,(Window^.BorderBottom-Window^.BorderTop)-0);
@@ -372,7 +374,7 @@ begin
    	   BufferNextSwap := 0;
 
          {Set initial visible bitmaps if we're using ScreenBuffer vs Viewport swapping}
-         JARenderRasterPort := @Buffers[BufferNextRender]^.RasterPort;
+         JARenderRasterPort := Buffers[BufferNextRender]^.RasterPort;
 
          Window^.RasterPort^.BitMap := Buffers[BufferNextSwap]^.BitMap;
          Window^.ViewPort^.RasInfo^.Bitmap := Buffers[BufferNextSwap]^.BitMap;
@@ -406,6 +408,7 @@ begin
       {Setup the cursor Bitmap}
       CursorBitmap := JABitmapCreate(16,16,2, Window^.ColourMap);
       MyPointer := PUInt16(AllocVec(SizeOf(UInt16)*36, MEMF_CHIP or MEMF_CLEAR));
+      CursorMemoryPointer := Pointer(MyPointer); // to free it later
 
       InitRastPort(@CursorRasterPort);
 
@@ -523,9 +526,11 @@ begin
 
    end;
 
+   if Assigned(AEngine^.CursorMemoryPointer) then
+     FreeVec(AEngine^.CursorMemoryPointer);
+
    JAMemFree(AEngine, SizeOf(TJAEngine));
    Result := true;
-
 
    //How are we closing our libraries?
    //CloseLibrary(IntuitionBase);
@@ -560,7 +565,7 @@ begin
    with AEngine^ do
    if (Buffers[BufferNextRender]^.Status = BufferStatus_Render) then
 	begin
-      JARenderRasterPort := @Buffers[BufferNextRender]^.RasterPort;
+      JARenderRasterPort := Buffers[BufferNextRender]^.RasterPort;
 
       {Weve already cleared this frame, or at least, issued the operation}
 
@@ -695,7 +700,7 @@ begin
    with TJAEngine(AEngine^) do
    begin
       {RenderBuffer Target}
-      JARenderRasterPort := @RenderBuffer^.RasterPort;
+      JARenderRasterPort := RenderBuffer^.RasterPort;
       {WindowBuffer Target}
       //JARenderRasterPort := @Window^.RasterPort;
 
@@ -753,7 +758,7 @@ begin
       {NOTE : Source Vec2,Dest Vec2 - then Width,Height}
       //BltBitMapRastPort(RenderBuffer^.Bitmap,0,0, Window^.RasterPort,0,0,RenderBuffer^.Width,RenderBuffer^.Height, $C0);
       BltBitMap(RenderBuffer^.Bitmap,0,0,Window^.RasterPort^.Bitmap,0,0,Window^.Properties.Width,Window^.Properties.Height, $C0,0,nil);
-      ClipBlit(@RenderBuffer^.RasterPort,0,0,Window^.RasterPort,0,0,Window^.Properties.Width,Window^.Properties.Height, $C0);
+      ClipBlit(RenderBuffer^.RasterPort,0,0,Window^.RasterPort,0,0,Window^.Properties.Width,Window^.Properties.Height, $C0);
 
 
       {wait for the blitter to finish - do this if result memory is to be accessed immediately}

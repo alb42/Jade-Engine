@@ -64,7 +64,6 @@
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <RelocatableUnit Value="True"/>
-            <TargetProcessor Value="68060"/>
             <TargetCPU Value="m68k"/>
             <TargetOS Value="amiga"/>
             <Optimizations>
@@ -83,36 +82,35 @@
             <CompilerMessages>
               <IgnoredMessages idx9015="True" idx9009="True"/>
             </CompilerMessages>
-            <CustomOptions Value="-Cf68060"/>
           </Other>
         </CompilerOptions>
       </Item2>
     </BuildModes>
-    <Units Count="70">
+    <Units Count="75">
       <Unit0>
         <Filename Value="JA.pas"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="210"/>
-        <CursorPos X="10" Y="249"/>
+        <TopLine Value="270"/>
+        <CursorPos X="66" Y="264"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="JARender.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="4"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="85"/>
-        <CursorPos X="44" Y="123"/>
+        <TopLine Value="632"/>
+        <CursorPos X="8" Y="428"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="JAWindow.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="50"/>
-        <CursorPos X="45" Y="98"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="104"/>
+        <CursorPos X="16" Y="124"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit2>
@@ -127,11 +125,10 @@
       <Unit4>
         <Filename Value="JAScreen.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="80"/>
         <CursorPos X="28" Y="99"/>
         <UsageCount Value="201"/>
-        <Loaded Value="True"/>
       </Unit4>
       <Unit5>
         <Filename Value="JALog.pas"/>
@@ -144,31 +141,28 @@
       <Unit6>
         <Filename Value="JAMath.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <TopLine Value="112"/>
         <CursorPos X="24" Y="140"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit6>
       <Unit7>
         <Filename Value="JASpatial.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="6"/>
-        <WindowIndex Value="1"/>
-        <TopLine Value="7"/>
-        <CursorPos X="25" Y="53"/>
+        <EditorIndex Value="7"/>
+        <CursorPos X="24" Y="35"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit7>
       <Unit8>
         <Filename Value="JANode.pas"/>
         <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="87"/>
-        <CursorPos X="4" Y="118"/>
+        <TopLine Value="417"/>
+        <CursorPos X="26" Y="446"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit8>
       <Unit9>
         <Filename Value="JAList.pas"/>
@@ -190,28 +184,27 @@
       <Unit11>
         <Filename Value="JASysInfo.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="163"/>
-        <CursorPos X="63" Y="207"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="118"/>
+        <CursorPos X="35" Y="165"/>
         <UsageCount Value="203"/>
-        <Loaded Value="True"/>
       </Unit11>
       <Unit12>
         <Filename Value="JAEngine.pas"/>
         <IsPartOfProject Value="True"/>
-        <WindowIndex Value="2"/>
-        <TopLine Value="565"/>
-        <CursorPos X="22" Y="590"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="852"/>
+        <CursorPos X="45" Y="887"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit12>
       <Unit13>
         <Filename Value="JABitmap.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="6"/>
-        <TopLine Value="7"/>
-        <CursorPos X="38" Y="24"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="75"/>
+        <CursorPos X="69" Y="107"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit13>
@@ -227,12 +220,11 @@
       <Unit15>
         <Filename Value="JAPolygon.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="53"/>
-        <CursorPos X="24" Y="145"/>
+        <TopLine Value="346"/>
+        <CursorPos X="35" Y="386"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit15>
       <Unit16>
         <Filename Value="JAPolygonTools.pas"/>
@@ -245,12 +237,11 @@
       <Unit17>
         <Filename Value="JASketch.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <TopLine Value="75"/>
         <CursorPos X="38" Y="115"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit17>
       <Unit18>
         <Filename Value="JASketchTools.pas"/>
@@ -288,24 +279,22 @@
       <Unit22>
         <Filename Value="JAToyStarSystem.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="51"/>
-        <CursorPos X="3" Y="66"/>
-        <UsageCount Value="173"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="94"/>
+        <CursorPos X="26" Y="131"/>
+        <UsageCount Value="180"/>
       </Unit22>
       <Unit23>
         <Filename Value="JAPalette.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <TopLine Value="134"/>
         <CursorPos X="14" Y="169"/>
-        <UsageCount Value="126"/>
+        <UsageCount Value="133"/>
         <Bookmarks Count="1">
           <Item0 Y="190" ID="9"/>
         </Bookmarks>
-        <Loaded Value="True"/>
       </Unit23>
       <Unit24>
         <Filename Value="JAGlobal.pas"/>
@@ -313,45 +302,45 @@
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <CursorPos X="33" Y="16"/>
-        <UsageCount Value="40"/>
+        <UsageCount Value="47"/>
       </Unit24>
       <Unit25>
         <Filename Value="JAPen.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="73"/>
         <CursorPos X="31" Y="114"/>
-        <UsageCount Value="199"/>
+        <UsageCount Value="198"/>
       </Unit25>
       <Unit26>
         <Filename Value="JAScreenPicasso.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="2"/>
-        <UsageCount Value="199"/>
+        <UsageCount Value="198"/>
       </Unit26>
       <Unit27>
         <Filename Value="JAWindowPicasso.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="23" Y="8"/>
-        <UsageCount Value="199"/>
+        <UsageCount Value="198"/>
       </Unit27>
       <Unit28>
         <Filename Value="JAParticleWorld.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="17" Y="7"/>
-        <UsageCount Value="198"/>
+        <UsageCount Value="197"/>
       </Unit28>
       <Unit29>
         <Filename Value="JACamera.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="4" Y="11"/>
-        <UsageCount Value="198"/>
+        <UsageCount Value="197"/>
       </Unit29>
       <Unit30>
         <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\amunits\src\coreunits\utility.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="309"/>
         <CursorPos X="50" Y="339"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="10"/>
       </Unit30>
       <Unit31>
         <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\amunits\src\coreunits\agraphics.pas"/>
@@ -359,26 +348,29 @@
         <WindowIndex Value="1"/>
         <TopLine Value="2394"/>
         <CursorPos X="5" Y="2424"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="22"/>
       </Unit31>
       <Unit32>
         <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\amunits\src\coreunits\intuition.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="27" Y="9"/>
-        <UsageCount Value="5"/>
+        <UsageCount Value="4"/>
       </Unit32>
       <Unit33>
         <Filename Value="JRenderBufferIntuition.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="43"/>
-        <CursorPos X="48" Y="24"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="94"/>
+        <CursorPos X="65" Y="106"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
+          <IsVisibleTab Value="True"/>
           <EditorIndex Value="-1"/>
-          <TopLine Value="163"/>
-          <CursorPos X="40" Y="208"/>
+          <WindowIndex Value="2"/>
+          <TopLine Value="203"/>
+          <CursorPos X="54" Y="235"/>
         </ExtraEditor1>
         <UsageCount Value="100"/>
+        <Loaded Value="True"/>
       </Unit33>
       <Unit34>
         <Filename Value="C:\lazarus\fpc\3.0.4\source\rtl\inc\systemh.inc"/>
@@ -386,7 +378,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="511"/>
         <CursorPos X="5" Y="541"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="5"/>
       </Unit34>
       <Unit35>
         <Filename Value="JTypes.pas"/>
@@ -394,14 +386,14 @@
         <WindowIndex Value="1"/>
         <TopLine Value="1903"/>
         <CursorPos X="61" Y="1933"/>
-        <UsageCount Value="46"/>
+        <UsageCount Value="45"/>
       </Unit35>
       <Unit36>
         <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\amunits\src\otherlibs\picasso96api.pas"/>
         <UnitName Value="PICASSO96API"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="35"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="3"/>
       </Unit36>
       <Unit37>
         <Filename Value="JATypes.pas"/>
@@ -409,27 +401,27 @@
         <WindowIndex Value="1"/>
         <TopLine Value="267"/>
         <CursorPos X="25" Y="290"/>
-        <UsageCount Value="102"/>
+        <UsageCount Value="101"/>
       </Unit37>
       <Unit38>
         <Filename Value="..\J\Jink\JFrameWork\JLinkedList.pas"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <CursorPos X="31" Y="49"/>
-        <UsageCount Value="5"/>
+        <UsageCount Value="4"/>
       </Unit38>
       <Unit39>
         <Filename Value="..\J\Jink\JFrameWork\JListItem.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="39" Y="9"/>
-        <UsageCount Value="5"/>
+        <UsageCount Value="4"/>
       </Unit39>
       <Unit40>
         <Filename Value="JAShadow.pas"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <CursorPos X="54" Y="10"/>
-        <UsageCount Value="65"/>
+        <UsageCount Value="64"/>
       </Unit40>
       <Unit41>
         <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\amunits\src\coreunits\timer.pas"/>
@@ -437,40 +429,40 @@
         <WindowIndex Value="1"/>
         <TopLine Value="23"/>
         <CursorPos X="46" Y="47"/>
-        <UsageCount Value="12"/>
+        <UsageCount Value="11"/>
       </Unit41>
       <Unit42>
         <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\amunits\src\coreunits\amigalib.pas"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
-        <UsageCount Value="1"/>
+        <UsageCount Value="0"/>
       </Unit42>
       <Unit43>
         <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\amunits\src\coreunits\gadtools.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="463"/>
         <CursorPos X="5" Y="495"/>
-        <UsageCount Value="3"/>
+        <UsageCount Value="2"/>
       </Unit43>
       <Unit44>
         <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\amunits\src\utilunits\linklist.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="64"/>
         <CursorPos X="104" Y="8"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit44>
       <Unit45>
         <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\amunits\src\coreunits\layers.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="94"/>
         <CursorPos X="5" Y="124"/>
-        <UsageCount Value="12"/>
+        <UsageCount Value="11"/>
       </Unit45>
       <Unit46>
         <Filename Value="JAScene.pas"/>
-        <EditorIndex Value="7"/>
-        <TopLine Value="92"/>
-        <CursorPos X="32" Y="132"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="74"/>
+        <CursorPos X="15" Y="104"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit46>
@@ -480,20 +472,21 @@
         <WindowIndex Value="1"/>
         <TopLine Value="211"/>
         <CursorPos X="42" Y="7"/>
-        <UsageCount Value="37"/>
+        <UsageCount Value="36"/>
       </Unit47>
       <Unit48>
         <Filename Value="..\J\Jink\JFrameWork\JMath.pas"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <CursorPos X="23" Y="5"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="3"/>
       </Unit48>
       <Unit49>
         <Filename Value="JA.inc"/>
-        <EditorIndex Value="1"/>
-        <CursorPos X="12" Y="23"/>
-        <UsageCount Value="18"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="5"/>
+        <CursorPos X="3" Y="10"/>
+        <UsageCount Value="22"/>
         <Loaded Value="True"/>
       </Unit49>
       <Unit50>
@@ -501,20 +494,20 @@
         <EditorIndex Value="-1"/>
         <WindowIndex Value="2"/>
         <CursorPos X="33" Y="4"/>
-        <UsageCount Value="69"/>
+        <UsageCount Value="68"/>
       </Unit50>
       <Unit51>
         <Filename Value="JAToy.pas"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="2"/>
         <CursorPos X="52" Y="9"/>
-        <UsageCount Value="41"/>
+        <UsageCount Value="40"/>
       </Unit51>
       <Unit52>
         <Filename Value="JAInline.inc"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
-        <UsageCount Value="1"/>
+        <UsageCount Value="0"/>
       </Unit52>
       <Unit53>
         <Filename Value="..\J\Jink\JFrameWork\JVarMan.pas"/>
@@ -522,14 +515,14 @@
         <WindowIndex Value="1"/>
         <TopLine Value="1024"/>
         <CursorPos X="6" Y="1017"/>
-        <UsageCount Value="3"/>
+        <UsageCount Value="2"/>
       </Unit53>
       <Unit54>
         <Filename Value="..\J\Jink\JFrameWork\JHooker.pas"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <CursorPos X="74" Y="120"/>
-        <UsageCount Value="3"/>
+        <UsageCount Value="2"/>
       </Unit54>
       <Unit55>
         <Filename Value="..\J\Jink\JFrameWork\JHashList.pas"/>
@@ -537,7 +530,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="444"/>
         <CursorPos X="16" Y="15"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="8"/>
       </Unit55>
       <Unit56>
         <Filename Value="..\J\Jink\JFrameWork\JRender\JRenderMan.pas"/>
@@ -545,7 +538,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="758"/>
         <CursorPos X="28" Y="480"/>
-        <UsageCount Value="3"/>
+        <UsageCount Value="2"/>
       </Unit56>
       <Unit57>
         <Filename Value="..\J\Jink\JUI\JUI_Element.pas"/>
@@ -553,26 +546,26 @@
         <WindowIndex Value="1"/>
         <TopLine Value="312"/>
         <CursorPos X="6" Y="357"/>
-        <UsageCount Value="3"/>
+        <UsageCount Value="2"/>
       </Unit57>
       <Unit58>
         <Filename Value="..\J\Jink\JUI\jui.inc"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <CursorPos X="5" Y="5"/>
-        <UsageCount Value="3"/>
+        <UsageCount Value="2"/>
       </Unit58>
       <Unit59>
         <Filename Value="C:\Users\ADMINI~1\AppData\Local\Temp\Rar$DIa0.229\U_IntersectLines3.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="363"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="3"/>
       </Unit59>
       <Unit60>
         <Filename Value="JA.lps"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="3"/>
         <DefaultSyntaxHighlighter Value="XML"/>
       </Unit60>
       <Unit61>
@@ -580,41 +573,41 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="645"/>
         <CursorPos X="5" Y="676"/>
-        <UsageCount Value="48"/>
+        <UsageCount Value="47"/>
       </Unit61>
       <Unit62>
         <Filename Value="C:\Lazarus\fpcsrc\rtl\amiga\system.pp"/>
         <UnitName Value="System"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="5"/>
+        <UsageCount Value="4"/>
       </Unit62>
       <Unit63>
         <Filename Value="C:\Lazarus\fpcsrc\rtl\amicommon\sysutils.pp"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="25"/>
         <CursorPos X="28" Y="38"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="3"/>
       </Unit63>
       <Unit64>
         <Filename Value="C:\Lazarus\fpcsrc\packages\os4units\src\picasso96api.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="137"/>
         <CursorPos X="13" Y="174"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit64>
       <Unit65>
         <Filename Value="C:\Lazarus\fpcsrc\packages\amunits\src\coreunits\intuition.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="1220"/>
         <CursorPos X="12" Y="1226"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="10"/>
       </Unit65>
       <Unit66>
         <Filename Value="C:\Lazarus\fpcsrc\packages\amunits\src\coreunits\agraphics.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="2177"/>
         <CursorPos Y="2177"/>
-        <UsageCount Value="12"/>
+        <UsageCount Value="11"/>
       </Unit66>
       <Unit67>
         <Filename Value="C:\Lazarus\fpcsrc\rtl\wince\windows.pp"/>
@@ -622,7 +615,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="17"/>
         <CursorPos X="2" Y="17"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="8"/>
       </Unit67>
       <Unit68>
         <Filename Value="C:\Lazarus\fpcsrc\packages\amunits\src\coreunits\exec.pas"/>
@@ -631,137 +624,171 @@
         <WindowIndex Value="1"/>
         <TopLine Value="578"/>
         <CursorPos X="4" Y="609"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="8"/>
       </Unit68>
       <Unit69>
         <Filename Value="C:\Lazarus\fpcsrc\packages\amunits\src\coreunits\layers.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="55"/>
         <CursorPos X="2" Y="56"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit69>
+      <Unit70>
+        <Filename Value="..\..\..\..\..\home\alb\FPC\fpc32\packages\amunits\src\coreunits\intuition.pas"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="2"/>
+        <TopLine Value="4050"/>
+        <CursorPos X="10" Y="4076"/>
+        <UsageCount Value="10"/>
+      </Unit70>
+      <Unit71>
+        <Filename Value="..\..\..\..\..\home\alb\FPC\fpc32\packages\amunits\src\coreunits\agraphics.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="2312"/>
+        <CursorPos X="10" Y="2342"/>
+        <UsageCount Value="11"/>
+      </Unit71>
+      <Unit72>
+        <Filename Value="..\..\..\..\..\home\alb\FPC\fpc32\packages\amunits\src\coreunits\exec.pas"/>
+        <UnitName Value="EXEC"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="2"/>
+        <TopLine Value="1216"/>
+        <CursorPos X="11" Y="1242"/>
+        <UsageCount Value="10"/>
+      </Unit72>
+      <Unit73>
+        <Filename Value="backup\JABitmap.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="78"/>
+        <CursorPos X="29" Y="107"/>
+        <UsageCount Value="10"/>
+      </Unit73>
+      <Unit74>
+        <Filename Value="backup\JRenderBufferIntuition.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="72"/>
+        <CursorPos X="22" Y="108"/>
+        <UsageCount Value="10"/>
+      </Unit74>
     </Units>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="29" HistoryIndex="28">
       <Position1>
         <Filename Value="JA.pas"/>
-        <Caret Line="15" Column="24"/>
+        <Caret Line="83" Column="52" TopLine="37"/>
       </Position1>
       <Position2>
-        <Filename Value="JAEngine.pas"/>
-        <Caret Line="281" Column="56" TopLine="232"/>
+        <Filename Value="JABitmap.pas"/>
+        <Caret Line="62" Column="43" TopLine="34"/>
       </Position2>
       <Position3>
-        <Filename Value="JAEngine.pas"/>
-        <Caret Line="280" Column="86" TopLine="250"/>
+        <Filename Value="JABitmap.pas"/>
+        <Caret Line="149" Column="38" TopLine="100"/>
       </Position3>
       <Position4>
-        <Filename Value="JAWindow.pas"/>
-        <Caret Line="80" Column="137" TopLine="49"/>
+        <Filename Value="JRenderBufferIntuition.pas"/>
+        <Caret Line="246" Column="10" TopLine="194"/>
       </Position4>
       <Position5>
-        <Filename Value="JAWindow.pas"/>
-        <Caret Line="78" TopLine="49"/>
+        <Filename Value="JABitmap.pas"/>
+        <Caret Line="108" Column="23" TopLine="81"/>
       </Position5>
       <Position6>
-        <Filename Value="JAWindow.pas"/>
-        <Caret Line="23"/>
+        <Filename Value="JRenderBufferIntuition.pas"/>
+        <Caret Line="203" Column="40" TopLine="176"/>
       </Position6>
       <Position7>
-        <Filename Value="JAWindow.pas"/>
-        <Caret Line="287" TopLine="230"/>
+        <Filename Value="JRenderBufferIntuition.pas"/>
+        <Caret Line="202" Column="4" TopLine="176"/>
       </Position7>
       <Position8>
-        <Filename Value="JAWindow.pas"/>
-        <Caret Line="277" Column="66" TopLine="230"/>
+        <Filename Value="JABitmap.pas"/>
+        <Caret Line="109" Column="33" TopLine="81"/>
       </Position8>
       <Position9>
-        <Filename Value="JAWindow.pas"/>
-        <Caret Line="273" Column="76" TopLine="230"/>
+        <Filename Value="JABitmap.pas"/>
+        <Caret Line="120" Column="56" TopLine="81"/>
       </Position9>
       <Position10>
-        <Filename Value="JAScreen.pas"/>
-        <Caret Line="51" Column="89" TopLine="20"/>
+        <Filename Value="JRenderBufferIntuition.pas"/>
+        <Caret Line="57" Column="15" TopLine="29"/>
       </Position10>
       <Position11>
-        <Filename Value="JAScreen.pas"/>
-        <Caret Line="45" Column="87" TopLine="20"/>
+        <Filename Value="JRenderBufferIntuition.pas"/>
+        <Caret Line="64" TopLine="62"/>
       </Position11>
       <Position12>
-        <Filename Value="JAScreen.pas"/>
-        <Caret Line="50" Column="91" TopLine="20"/>
+        <Filename Value="JRenderBufferIntuition.pas"/>
+        <Caret Line="162" Column="35" TopLine="85"/>
       </Position12>
       <Position13>
-        <Filename Value="JAScreen.pas"/>
-        <Caret Line="50" Column="86" TopLine="20"/>
+        <Filename Value="JABitmap.pas"/>
+        <Caret Line="107" Column="69" TopLine="75"/>
       </Position13>
       <Position14>
-        <Filename Value="JAScreen.pas"/>
-        <Caret Line="51" Column="135" TopLine="20"/>
+        <Filename Value="JA.inc"/>
+        <Caret Line="44" Column="54"/>
       </Position14>
       <Position15>
-        <Filename Value="JAScreen.pas"/>
-        <Caret Line="173" Column="2" TopLine="119"/>
+        <Filename Value="JA.inc"/>
+        <Caret Line="16" Column="23"/>
       </Position15>
       <Position16>
-        <Filename Value="JAScreen.pas"/>
-        <Caret Line="7" Column="15"/>
+        <Filename Value="JAScene.pas"/>
+        <Caret Line="104" Column="15" TopLine="74"/>
       </Position16>
       <Position17>
-        <Filename Value="JAScreen.pas"/>
-        <Caret Line="57" Column="184" TopLine="26"/>
+        <Filename Value="JA.pas"/>
+        <Caret Line="177" Column="48" TopLine="141"/>
       </Position17>
       <Position18>
-        <Filename Value="JAScreen.pas"/>
-        <Caret Line="97" Column="182" TopLine="67"/>
+        <Filename Value="JAWindow.pas"/>
+        <Caret Line="124" Column="16" TopLine="104"/>
       </Position18>
       <Position19>
-        <Filename Value="JAScreen.pas"/>
-        <Caret Line="127" Column="178" TopLine="97"/>
+        <Filename Value="JAEngine.pas"/>
+        <Caret Line="113" Column="12" TopLine="82"/>
       </Position19>
       <Position20>
-        <Filename Value="JAScreen.pas"/>
-        <Caret Line="50" Column="20" TopLine="19"/>
+        <Filename Value="JAEngine.pas"/>
+        <Caret Line="953" Column="30" TopLine="923"/>
       </Position20>
       <Position21>
-        <Filename Value="JA.pas"/>
-        <Caret Line="161" Column="81" TopLine="130"/>
+        <Filename Value="JAEngine.pas"/>
+        <Caret Line="175" Column="11" TopLine="144"/>
       </Position21>
       <Position22>
-        <Filename Value="JANode.pas"/>
-        <Caret Line="250" Column="8"/>
+        <Filename Value="JAScene.pas"/>
+        <Caret Line="104" Column="15" TopLine="74"/>
       </Position22>
       <Position23>
-        <Filename Value="JANode.pas"/>
-        <Caret Line="90" Column="21" TopLine="70"/>
+        <Filename Value="JAEngine.pas"/>
+        <Caret Line="855" Column="7" TopLine="823"/>
       </Position23>
       <Position24>
-        <Filename Value="JA.pas"/>
-        <Caret Line="164" Column="35" TopLine="133"/>
+        <Filename Value="JAEngine.pas"/>
+        <Caret Line="181" Column="22" TopLine="150"/>
       </Position24>
       <Position25>
-        <Filename Value="JAScene.pas"/>
-        <Caret Line="131" Column="7" TopLine="107"/>
+        <Filename Value="JAEngine.pas"/>
+        <Caret Line="326" Column="10" TopLine="296"/>
       </Position25>
       <Position26>
-        <Filename Value="JA.pas"/>
-        <Caret Line="277" Column="14"/>
+        <Filename Value="JAEngine.pas"/>
+        <Caret Line="349" Column="39" TopLine="296"/>
       </Position26>
       <Position27>
-        <Filename Value="JASysInfo.pas"/>
-        <Caret Line="172" Column="41" TopLine="142"/>
+        <Filename Value="JAEngine.pas"/>
+        <Caret Line="167" Column="10" TopLine="136"/>
       </Position27>
       <Position28>
-        <Filename Value="JA.pas"/>
-        <Caret Line="274" TopLine="229"/>
+        <Filename Value="JRenderBufferIntuition.pas"/>
+        <Caret Line="106" Column="65" TopLine="94"/>
       </Position28>
       <Position29>
         <Filename Value="JA.pas"/>
-        <Caret Line="272" Column="39" TopLine="240"/>
+        <Caret Line="264" Column="66" TopLine="270"/>
       </Position29>
-      <Position30>
-        <Filename Value="JA.pas"/>
-        <Caret Line="270" Column="48" TopLine="237"/>
-      </Position30>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>

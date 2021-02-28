@@ -238,7 +238,7 @@ Overlay is basically separate "fullscreen mode" overlayed in top of normal scree
             end;
 
             {store local references}
-            p96PIP_GetTags(Window,[P96PIP_SourceRPort, AsTag(@RasterPort), TAG_END]); {get the picasso pip window raster Port}
+            p96PIP_GetTags(Window,[P96PIP_SourceRPort, AsTag(RasterPort), TAG_END]); {get the picasso pip window raster Port}
             RasterPort^.Flags := DBUFFER; {Indicate that the raster port is double buffered.}
             ViewPort := @Screen^.Screen^.ViewPort;
 	         ColourMap := ViewPort^.Colormap;
@@ -288,4 +288,3 @@ begin
 end;
 
 end.
-

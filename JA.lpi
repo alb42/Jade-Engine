@@ -26,7 +26,7 @@
         <Mode0 Name="default"/>
       </Modes>
     </RunParams>
-    <Units Count="25">
+    <Units Count="26">
       <Unit0>
         <Filename Value="JA.pas"/>
         <IsPartOfProject Value="True"/>
@@ -127,6 +127,10 @@
         <Filename Value="JAGlobal.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit24>
+      <Unit25>
+        <Filename Value="JA.inc"/>
+        <IsPartOfProject Value="True"/>
+      </Unit25>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

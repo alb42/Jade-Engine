@@ -407,7 +407,9 @@ begin
    AShadow^.ShadowPenumbra0FinsCount := 0;
    AShadow^.ShadowPenumbra1FinsCount := 0;
    AShadow^.ShadowPenumbra0Index := 0;
-   AShadow^.ShadowPenumbra1Index := 0;          
+   AShadow^.ShadowPenumbra1Index := 0;
+   AShadow^.ShadowPenumbra0FinsCapacity := 0;
+   AShadow^.ShadowPenumbra1FinsCapacity := 0;
 end;
 
 end.
